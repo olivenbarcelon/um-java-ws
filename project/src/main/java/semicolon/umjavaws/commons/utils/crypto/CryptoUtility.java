@@ -1,10 +1,8 @@
 package semicolon.umjavaws.commons.utils.crypto;
 
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -17,7 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -33,14 +30,16 @@ import javax.crypto.spec.SecretKeySpec;
 import semicolon.umjavaws.commons.utils.MapperUtility;
 
 /**
- * Source:
- *  Logging in Java - https://www.geeksforgeeks.org/logging-in-java
- *  Java AES Encryption and Decryption - https://www.baeldung.com/java-aes-encryption-decryption
- *  Guide to UUID in Java - https://www.baeldung.com/java-uuid
- *  Generate JWT Token and Verify in Plain Java - https://metamug.com/article/security/jwt-java-tutorial-create-verify.html
+ * @since 2021-07-12 [JDK11]
+ * @version 2021-11-25
+ * @author Oliven C. Barcelon
+ * @see Reference:
+ * <a href="https://www.geeksforgeeks.org/logging-in-java">Logging in Java</a>,
+ * <a href="https://www.baeldung.com/java-aes-encryption-decryption">Java AES Encryption and Decryption</a>,
+ * <a href="https://www.baeldung.com/java-uuid">Guide to UUID in Java</a>,
+ * <a href="https://metamug.com/article/security/jwt-java-tutorial-create-verify.html">Generate JWT Token and Verify in Plain Java</a>
  */
 public class CryptoUtility {
-    private static Logger log = Logger.getLogger(CryptoUtility.class.getName());
     
     public static String decode(String encoded) {
         return Base64.decode(encoded);
@@ -115,12 +114,14 @@ public class CryptoUtility {
         byte[] bytes = cipher.doFinal(input.getBytes(StandardCharsets.UTF_8));
         return java.util.Base64.getEncoder().encodeToString(bytes);
     }
+    
     // Generate AES Key
     /*private static SecretKey generateKey(int bit) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(bit);
         return keyGenerator.generateKey();
     }*/
+    
     // Generate AES Key from password
     private static SecretKey generateKeyFromPassword(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -134,6 +135,7 @@ public class CryptoUtility {
         //new SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
     }
+    
     // Type 1 UUID Generation
     public static UUID generateUuid() {
         long most64SigBits = get64MostSignificantBits();
@@ -212,15 +214,13 @@ public class CryptoUtility {
         String base64EncodedBody = split[1];
         String decodedString = decode(base64EncodedBody);
         Map<String, Object> map = MapperUtility.toMap(decodedString);
-        log.info("Payload: " + MapperUtility.toJson(map));
         return map.get("sub").toString();
     }
     
     private static boolean isExpired(long epochMilli) {
         LocalDateTime expireAt = Instant.ofEpochMilli(epochMilli).atZone(ZoneId.systemDefault()).toLocalDateTime();
-        log.info("Expiration Date: " + expireAt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        //log.info("Expiration Date: " + expireAt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         LocalDateTime currentDate = LocalDateTime.now(ZoneId.systemDefault());
-        log.info("Current Date: " + currentDate.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         return currentDate.isAfter(expireAt);
     }
     
@@ -230,41 +230,12 @@ public class CryptoUtility {
         String base64EncodedBody = split[1];
         String decodedString = decode(base64EncodedBody);
         Map<String, Object> map = MapperUtility.toMap(decodedString);
-        log.info("Payload: " + MapperUtility.toJson(map));
         boolean isExpired = isExpired(Long.valueOf(map.get("exp").toString()));
         return validate && !isExpired;
     }
     
     private static boolean validateToken(String body, String signature) {
-        log.info("Body: " + body);
-        log.info("Signature: " + signature);
         return hmacSha256(body, "olivenbarcelon").equals(signature);
-    }
-    
-    public static String getMD5(String str) {
-        try {
-            // Generate an MD5 encrypted calculation summary
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            // Calculate md5 function
-            md.update(str.getBytes());
-            // digest() finally determines to return the md5 hash value, and the return value is 8 as a string. Because the md5 hash value is a 16-bit hex value, which is actually an 8-bit character
-            // The BigInteger function converts an 8-bit string into a 16-bit hex value, which is represented by a string; the hash value in the form of a string is obtained
-            BigInteger bigInteger = new BigInteger(1, md.digest());
-            String md5 = bigInteger.toString(16);
-            System.out.println("MD5: " + md5);
-            // print result
-            System.out.print("ByteArray of BigInteger " + bigInteger + " is");
-            
-            byte[] b1 = bigInteger.toByteArray();
-            for(int i = 0; i < b1.length; i++) {
-                System.out.format("0x%02X", b1[i]);
-            }
-            //BigInteger will omit 0, need to complete to 32
-            return fillMD5(md5);
-        }
-        catch(Exception e) {
-            throw new RuntimeException("MD5 encryption error: " + e.getMessage(), e);
-        }
     }
     
     public static String fillMD5(String md5){
