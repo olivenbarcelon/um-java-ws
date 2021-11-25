@@ -18,5 +18,8 @@ jobs:
           mvn package spring-boot:repackage -DskipTests
       - name: Upload reports to codecov
         run: |
-          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
-          bash <(curl -s https://codecov.io/bash)
+#          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
+#          bash <(curl -s https://codecov.io/bash)
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -f coverage/codecov-result.json -Z
