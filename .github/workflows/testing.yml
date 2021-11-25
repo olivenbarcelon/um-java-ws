@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Maven dependency
+      - name: Maven cache dependency
         run: |
           cd project
           mvn dependency:go-offline -B
-      - name: Maven Clean Package
+      - name: Maven package
         run: |
           cd project
-          mvn clean package spring-boot:repackage
+          mvn package spring-boot:repackage -DskipTests
       - name: Upload reports to codecov
         run: |
           export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
