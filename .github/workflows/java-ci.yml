@@ -12,7 +12,7 @@ jobs:
     
     env:
       DB_HOST: 127.0.0.1
-      DB_DATABASE: um-java-ws
+      DB_DATABASE: `um-java-ws`
       DB_USER: root
       DB_PASSWORD: root
     
