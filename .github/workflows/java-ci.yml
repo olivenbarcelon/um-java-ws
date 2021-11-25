@@ -21,4 +21,12 @@ jobs:
         run: |
           cd project
           mvn --batch-mode --update-snapshots verify -DskipTests
-          
+      - name: Execute Test
+        run: |
+          cd project
+          mvn cobertura:cobertura
+      
+      - name: Upload reports to codecov
+        run: |
+#          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
+          bash <(curl -s https://codecov.io/bash)
