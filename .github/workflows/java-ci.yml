@@ -1,6 +1,8 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    branches: [master]
 
 jobs:
   build:
@@ -8,13 +10,20 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+      
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'adopt'
+      
       - name: Build with Maven
         run: |
           cd project
           mvn --batch-mode --update-snapshots verify -DskipTests
+      
+      - name: Upload reports to codecov
+        run: |
+          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
+          bash <(curl -s https://codecov.io/bash)
           
