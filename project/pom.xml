@@ -64,6 +64,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.25</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/xml-apis/xml-apis -->
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.0.b2</version>
+		</dependency>
 		<!-- Test Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -103,6 +109,7 @@
 			<plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
 				<artifactId>clover-maven-plugin</artifactId>
+				<version>4.4.1</version>
 				<configuration>
 					<generateJSON>true</generateJSON>
 					<generateHTML>true</generateHTML>
@@ -112,6 +119,7 @@
 			<plugin>
 				<groupId>org.openclover</groupId>
 				<artifactId>clover-maven-plugin</artifactId>
+				<version>4.4.1</version>
 			</plugin>
 		</plugins>
 	</build>

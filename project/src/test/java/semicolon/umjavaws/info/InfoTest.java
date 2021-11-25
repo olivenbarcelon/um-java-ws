@@ -7,7 +7,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class InfoTest {
-    @Autowired
+	@Autowired
 	private WebTestClient webTestClient;
 	
 	@Test
