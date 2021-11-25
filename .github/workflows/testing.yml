@@ -6,20 +6,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
-      - name: Maven cache dependency
-        run: |
-          cd project
-          mvn dependency:go-offline -B
-      - name: Maven package
-        run: |
-          cd project
-          mvn package spring-boot:repackage -DskipTests
-      - name: Upload reports to codecov
-        run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov -f coverage/codecov-result.json -Z
-#          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
-#          bash <(curl -s https://codecov.io/bash)
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
+        
