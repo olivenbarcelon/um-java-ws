@@ -28,7 +28,7 @@ jobs:
       - name: Produce Coverage Reports
         run: |
           cd project
-          mvn cobertura:cobertura -DskipTests
+          mvn cobertura:cobertura
       
       - name: Upload Reports
         run: |
