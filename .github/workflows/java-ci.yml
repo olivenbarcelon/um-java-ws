@@ -1,3 +1,4 @@
+# Getting Started With Codecov and Java - https://about.codecov.io/language/java/
 name: Java CI
 
 on:
@@ -21,10 +22,11 @@ jobs:
         run: |
           cd project
           mvn --batch-mode --update-snapshots verify -DskipTests
-      - name: Execute Test
+      
+      - name: Build Coverage
         run: |
           cd project
-          mvn cobertura:cobertura
+          mvn cobertura:cobertura -DskipTests
       
       - name: Upload reports to codecov
         run: |
