@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
-			<version>2.0.2</version>
+			<version>1.4.01</version>
 		</dependency>
 		<!-- Test Dependencies -->
 		<dependency>
@@ -106,7 +106,7 @@
 				</configuration>
 			</plugin>
 			
-			<plugin>
+			<!--plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
 				<artifactId>clover-maven-plugin</artifactId>
 				<version>4.4.1</version>
@@ -120,7 +120,7 @@
 				<groupId>org.openclover</groupId>
 				<artifactId>clover-maven-plugin</artifactId>
 				<version>4.4.1</version>
-			</plugin>
+			</plugin-->
 		</plugins>
 	</build>
 
