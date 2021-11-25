@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/olivenbarcelon/um-java-ws/branch/master/graph/badge.svg?token=T4PI6XYZ3X)](https://codecov.io/gh/olivenbarcelon/um-java-ws)
 # um-java-ws
 User Management System<br /><br />
 
