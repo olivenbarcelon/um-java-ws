@@ -15,7 +15,7 @@ jobs:
       - name: Maven Clean Package
         run: |
           cd project
-          mvn clean package
+          mvn clean package spring-boot:repackage
       - name: Upload reports to codecov
         run: |
           export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
