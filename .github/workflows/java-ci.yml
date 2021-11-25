@@ -12,7 +12,7 @@ jobs:
     
     env:
       DB_HOST: 127.0.0.1
-      DB_DATABASE: `um-java-ws`
+      DB_DATABASE: um-java-ws
       DB_USER: root
       DB_PASSWORD: root
     
@@ -20,7 +20,7 @@ jobs:
       - name: Setup MySQL
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{env.DB_DATABASE}};' -u${{env.DB_USER}} -p${{env.DB_PASSWORD}}
+          mysql -e 'CREATE DATABASE `${{env.DB_DATABASE}}`;' -u${{env.DB_USER}} -p${{env.DB_PASSWORD}}
           mysql -e 'SHOW DATABASES;' -u${{env.DB_USER}} -p${{env.DB_PASSWORD}}
       
       - uses: actions/checkout@v2
