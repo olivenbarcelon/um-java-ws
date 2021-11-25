@@ -1,4 +1,5 @@
 # Getting Started With Codecov and Java - https://about.codecov.io/language/java/
+# Building and testing Java with Maven - https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 name: Java CI
 
 on:
@@ -17,18 +18,20 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+          cache: maven
       
       - name: Build with Maven
         run: |
           cd project
           mvn --batch-mode --update-snapshots verify -DskipTests
       
-      - name: Build Coverage
+      - name: Produce Coverage Reports
         run: |
           cd project
           mvn cobertura:cobertura -DskipTests
       
-      - name: Upload reports to codecov
+      - name: Upload Reports
         run: |
           export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
           bash <(curl -s https://codecov.io/bash)
+          
