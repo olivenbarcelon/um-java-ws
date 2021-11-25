@@ -13,7 +13,10 @@ Setup Repository<br />
 git clone https://olivenbarcelon@github.com/olivenbarcelon/um-java-ws.git<br /><br />
 
 Setup Spring Application for Backend<br />
-spring init --build=maven --java-version=11 --dependencies=webflux --packaging=jar --groupId=semicolon --artifactId=um-java-ws --package-name=semicolon.umjavaws -n=um-java-ws --description="User Management System" project --force<br /><br />
+spring init --build=maven --java-version=8 --dependencies=webflux --packaging=jar --groupId=semicolon --artifactId=um-java-ws --package-name=semicolon.umjavaws -n=um-java-ws --description="User Management System" project --force<br /><br />
 
 Run Spring Application<br />
-mvn spring-boot:run<br /><br />
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev"<br /><br />
+
+Run Maven Test<br />
+mvn test -Dspring.profiles.active=dev<br /><br />
