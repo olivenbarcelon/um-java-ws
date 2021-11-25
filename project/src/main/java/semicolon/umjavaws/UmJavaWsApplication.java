@@ -12,6 +12,6 @@ public class UmJavaWsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UmJavaWsApplication.class, args);
-		log.info("Sring Version: " + SpringVersion.getVersion());
+		log.info("Spring Version: " + SpringVersion.getVersion());
 	}
 }
