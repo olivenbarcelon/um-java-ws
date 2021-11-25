@@ -1,3 +1,4 @@
+[![GuardRails badge](https://api.guardrails.io/v2/badges/olivenbarcelon/um-java-ws.svg?token=5dd98b4b328796d3683b75456646fede05140d749a70cf328e56f71d7df47ee0&provider=github)](https://dashboard.guardrails.io/gh/olivenbarcelon/101105)
 [![codecov](https://codecov.io/gh/olivenbarcelon/um-java-ws/branch/master/graph/badge.svg?token=T4PI6XYZ3X)](https://codecov.io/gh/olivenbarcelon/um-java-ws)
 # um-java-ws
 User Management System<br /><br />
