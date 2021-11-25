@@ -23,12 +23,7 @@ jobs:
       - name: Build with Maven
         run: |
           cd project
-          mvn --batch-mode --update-snapshots verify -DskipTests
-      
-      - name: Produce Coverage Reports
-        run: |
-          cd project
-          mvn cobertura:cobertura
+          mvn cobertura:cobertura --batch-mode --update-snapshots verify
       
       - name: Upload Reports
         run: |
