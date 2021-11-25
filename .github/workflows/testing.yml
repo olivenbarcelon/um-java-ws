@@ -1,0 +1,22 @@
+name: Testing
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Maven dependency
+        run: |
+          cd project
+          mvn dependency:go-offline -B
+      - name: Maven Clean Package
+        run: |
+          cd project
+          mvn clean package
+      - name: Upload reports to codecov
+        run: |
+          export CODECOV_TOKEN="${{secrets.CODECOV_TOKEN}}"
+          bash <(curl -s https://codecov.io/bash)
