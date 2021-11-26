@@ -3,6 +3,8 @@
 # MySQL GitHub Action - https://github.com/mirromutth/mysql-action#the-default-mysql
 # How to make MySQL work in your GitHub Actions - https://ovirium.com/blog/how-to-make-mysql-work-in-your-github-actions/
 # JaCoCo Code Coverage Tutorial with Spring Boot - https://www.youtube.com/watch?v=UZWOb9ce6go
+# Spring 5 Reactive Project - https://github.com/eugenp/tutorials/tree/master/spring-5-reactive-2
+# JaCoCo-Demo - https://github.com/dailycodebuffer/Spring-MVC-Tutorials/tree/master/JaCoCo-Demo
 name: Java CI
 
 on:
@@ -15,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      DB_HOST: 127.0.0.1
-      DB_DATABASE: um-java-ws
-      DB_USER: root
-      DB_PASSWORD: root
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_DATABASE: ${{secrets.DB_DATABASE}}
+      DB_USER: ${{secrets.DB_USER}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
     
     steps:
       - name: Setup MySQL
