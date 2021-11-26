@@ -69,6 +69,7 @@
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
 			<version>1.4.01</version>
+			<scope>compile</scope>
 		</dependency>
 		<!-- Test Dependencies -->
 		<dependency>
@@ -97,6 +98,14 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>2.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+						<version>1.4.01</version>
+						<scope>compile</scope>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<formats>
 						<format>html</format>
@@ -104,13 +113,6 @@
 					</formats>
 					<check />
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-						<version>1.4.01</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			
 			<!--plugin>
