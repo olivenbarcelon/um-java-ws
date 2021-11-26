@@ -9,15 +9,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
-import lombok.Data;
+import lombok.Getter;
 import semicolon.umjavaws.commons.utils.StringUtility;
 
 /**
  * @since 2021-08-01 [JDK11]
- * @version 2021-11-25
+ * @version 2021-11-26
  * @author Oliven C. Barcelon
  */
-@Data
+@Getter
 public class Response {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Object data;
@@ -28,10 +28,13 @@ public class Response {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private String message;
     
-    public Response(String message) {
-        this.message = message;
-    }
-    
+    /**
+     * Constructor method with object
+     * @param object {@link Object}
+     * @since 2021-08-01 [JDK11]
+     * @version 2021-11-26
+     * @author Oliven C. Barcelon
+     */
     public Response(Object object) {
         if(object instanceof Page) {
             Page<?> data = (Page<?>) object;
@@ -45,6 +48,10 @@ public class Response {
         else {
             this.data = object;
         }
+    }
+    
+    public Response(String message) {
+        this.message = message;
     }
     
     public Response(Object object, String message) {
