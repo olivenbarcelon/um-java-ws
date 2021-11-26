@@ -12,8 +12,8 @@ public class InfoTest {
     private WebTestClient webTestClient;
     
     @Test
-    public void apiInfo() {
-        webTestClient.get().uri("/info").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
+    public void testInfo() {
+        webTestClient.get().uri("/api/info").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
             .contentType(MediaType.APPLICATION_JSON).expectBodyList(Info.class);
     }
 }
