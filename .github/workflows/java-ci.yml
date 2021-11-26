@@ -2,6 +2,7 @@
 # Building and testing Java with Maven - https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 # MySQL GitHub Action - https://github.com/mirromutth/mysql-action#the-default-mysql
 # How to make MySQL work in your GitHub Actions - https://ovirium.com/blog/how-to-make-mysql-work-in-your-github-actions/
+# JaCoCo Code Coverage Tutorial with Spring Boot - https://www.youtube.com/watch?v=UZWOb9ce6go
 name: Java CI
 
 on:

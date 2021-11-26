@@ -19,4 +19,4 @@ Run Spring Application<br />
 mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev"<br /><br />
 
 Run Maven Test<br />
-mvn test -Dspring.profiles.active=dev<br /><br />
+mvn --batch-mode --update-snapshots verify -Dspring.profiles.active=dev<br /><br />
