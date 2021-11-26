@@ -2,14 +2,14 @@ package io.github.olivenbarcelon.umjavaws.commons.reactive;
 
 import org.springframework.data.domain.Page;
 
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * @since 2021-08-01 [JDK11]
- * @version 2021-11-25
+ * @version 2021-11-27
  * @author Oliven C. Barcelon
  */
-@Data
+@Getter
 public class Pagination {
     private int perPage;
     private long total;
@@ -17,6 +17,13 @@ public class Pagination {
     private int totalPages;
     private int currentPage;
     
+    /**
+     * Constructor method with page
+     * @param page
+     * @since 2021-08-01 [JDK11]
+     * @version 2021-11-27
+     * @author Oliven C. Barcelon
+     */
     public Pagination(Page<?> page) {
         perPage = page.getSize();
         total = page.getTotalElements();
