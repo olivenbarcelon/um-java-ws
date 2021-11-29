@@ -48,7 +48,7 @@ public class UserAccountTest {
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
-            .expectStatus().isCreated()
+            .expectStatus().is4xxClientError()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
