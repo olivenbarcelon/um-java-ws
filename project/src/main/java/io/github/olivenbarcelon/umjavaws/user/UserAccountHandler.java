@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import reactor.core.publisher.Mono;
+import io.github.olivenbarcelon.umjavaws.commons.exception.ReactiveExceptionHandler;
 import io.github.olivenbarcelon.umjavaws.commons.reactive.Response;
+import reactor.core.publisher.Mono;
 
 @Component
 public class UserAccountHandler {
@@ -16,7 +18,11 @@ public class UserAccountHandler {
     private UserAccountService service;
     
     public Mono<ServerResponse> store(ServerRequest request) {
-        return service.add().flatMap(fm -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromValue(new Response(fm, "User Account has successfully created"))));
+        Mono<UserAccountEntity> model = request.bodyToMono(UserAccountEntity.class);
+        return model.flatMap(service::add).flatMap(fm -> ServerResponse.created(UriComponentsBuilder
+                    .fromPath("/api/user-account/" + fm.getUuid()).build().toUri())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(new Response(fm, "User Account has successfully created"))))
+            .onErrorResume(e -> ReactiveExceptionHandler.exception(request, e));
     }
 }
