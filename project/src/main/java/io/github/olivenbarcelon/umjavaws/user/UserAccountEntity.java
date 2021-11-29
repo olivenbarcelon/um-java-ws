@@ -1,14 +1,14 @@
 package io.github.olivenbarcelon.umjavaws.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Source:
@@ -20,15 +20,16 @@ import java.time.LocalDateTime;
 @Setter
 public class UserAccountEntity {
     @Id
-    @JsonIgnore
+    @JsonIgnoreProperties(allowGetters = false)
     private long id;
     private String uuid;
     private String username;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnoreProperties(allowGetters = false)
     private String password;
     private String role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @JsonIgnore
+    @JsonIgnoreProperties(allowGetters = false)
     private LocalDateTime deletedAt;
 }
