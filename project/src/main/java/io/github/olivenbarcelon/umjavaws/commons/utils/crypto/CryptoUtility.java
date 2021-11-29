@@ -31,12 +31,10 @@ import io.github.olivenbarcelon.umjavaws.commons.utils.MapperUtility;
 
 /**
  * @since 2021-07-12 [JDK11]
- * @version 2021-11-25
+ * @version 2021-11-29
  * @author Oliven C. Barcelon
  * @see Reference:
  * <a href="https://www.geeksforgeeks.org/logging-in-java">Logging in Java</a>,
- * <a href="https://www.baeldung.com/java-aes-encryption-decryption">Java AES Encryption and Decryption</a>,
- * <a href="https://www.baeldung.com/java-uuid">Guide to UUID in Java</a>,
  * <a href="https://metamug.com/article/security/jwt-java-tutorial-create-verify.html">Generate JWT Token and Verify in Plain Java</a>
  */
 public class CryptoUtility {
@@ -90,6 +88,17 @@ public class CryptoUtility {
         return encrypt(input, "olivenbarcelon");
     }
     
+    /**
+     * Encrypt input with secret key
+     * @param input {@link String}
+     * @param secret {@link String}
+     * @return {@link String}
+     * @since 2021-07-12 [JDK11]
+     * @version 2021-11-29
+     * @author Oliven C. Barcelon
+     * @see Reference:
+     * <a href="https://www.baeldung.com/java-aes-encryption-decryption">Java AES Encryption and Decryption</a>
+     */
     public static String encrypt(String input, String secret) {
         return encrypt(input, secret, secret);
     }
@@ -136,7 +145,15 @@ public class CryptoUtility {
         return new IvParameterSpec(iv);
     }
     
-    // Type 1 UUID Generation
+    /**
+     * Type 1 UUID Generation
+     * @return {@link UUID}
+     * @since 2021-07-12 [JDK11]
+     * @version 2021-11-29
+     * @author Oliven C. Barcelon
+     * @see Reference:
+     * <a href="https://www.baeldung.com/java-uuid">Guide to UUID in Java</a>
+     */
     public static UUID generateUuid() {
         long most64SigBits = get64MostSignificantBits();
         long least64SigBits = get64LeastSignificantBits();
