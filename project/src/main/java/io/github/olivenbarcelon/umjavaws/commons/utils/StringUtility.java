@@ -115,7 +115,7 @@ public class StringUtility {
     }
     
     /**
-     * Validate input if null or empty
+     * Validate input
      * @param inputs {@link String}
      * @return {@link Boolean}
      * @since 2021.09.09 [JDK11]
@@ -127,15 +127,23 @@ public class StringUtility {
         if(count > 0) return false;
         return true;
     }
-
+    
+    /**
+     * Check if input is null or empty
+     * @param inputs {@link String}
+     * @return {@link Boolean}
+     * @since 2021.09.09 [JDK11]
+     * @version 2021.11.29
+     * @author Oliven C. Barcelon
+     */
+    private static boolean isNullOrEmpty(String input) {
+        return input == null || input.isEmpty();
+    }
+    
     public static boolean isWord(String input) {
         if(isNullOrEmpty(input)) return true;
         String regex = "^[a-zA-Z\\sÑñ]+";
         return input.matches(regex);
-    }
-
-    public static boolean isNullOrEmpty(String input) {
-        return input == null || input.isEmpty();
     }
 
     public static String formatPhoneNumber(String input) {
