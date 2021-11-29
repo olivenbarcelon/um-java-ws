@@ -18,6 +18,7 @@ public class UserAccountTest {
     @Autowired
     private WebTestClient webTestClient;
     
+    // Test POST request
     @Test
     @Order(1)
     public void post() {
@@ -49,7 +50,31 @@ public class UserAccountTest {
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        // Store user
+    }
+    
+    @Test
+    @Order(2)
+    public void postWithRoleIsNull() {
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("username");
+        entity.setPassword("password");
+        webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(entity), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.data.uuid").isNotEmpty();
+    }
+    
+    @Test
+    @Order(3)
+    public void postWithRoleIsUser() {
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("username");
+        entity.setPassword("password");
         entity.setRole(Role.USER.toString());
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
