@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 /**
  * @since 2021.09.09 [JDK11]
- * @version 2021.11.25
+ * @version 2021.11.29
  * @author Oliven C. Barcelon
  */
 public class StringUtility {
@@ -113,10 +113,17 @@ public class StringUtility {
     public static boolean isValid(String input) {
         return !isNullOrEmpty(input);
     }
-
+    
+    /**
+     * Validate input if null or empty
+     * @param inputs {@link String}
+     * @return {@link Boolean}
+     * @since 2021.09.09 [JDK11]
+     * @version 2021.11.29
+     * @author Oliven C. Barcelon
+     */
     public static boolean isValid(String... inputs) {
         long count = Stream.of(inputs).filter(StringUtility::isNullOrEmpty).count();
-        //System.out.println("Count: " + count);
         if(count > 0) return false;
         return true;
     }

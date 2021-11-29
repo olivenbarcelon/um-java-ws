@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import io.github.olivenbarcelon.umjavaws.commons.enums.Role;
 import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -20,17 +21,18 @@ public class UserAccountTest {
     @Test
     @Order(1)
     public void post() {
-        // validate
+        // Validate user account if null or empty
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(new UserAccountEntity()), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        // store super admin
+        // Store super admin
         UserAccountEntity entity = new UserAccountEntity();
         entity.setUsername("username");
         entity.setPassword("password");
+        entity.setRole(Role.SUPER_ADMIN.toString());
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
@@ -40,7 +42,18 @@ public class UserAccountTest {
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
-        // store user
+        // Validate super admin
+        webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(entity), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.data.uuid").isNotEmpty();
+        // Store user
+        entity.setRole(Role.USER.toString());
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
