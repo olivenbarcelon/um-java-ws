@@ -41,7 +41,7 @@ jobs:
       - name: Build with Maven
         run: |
           cd project
-          mvn --batch-mode --update-snapshots verify
+          mvn --batch-mode --update-snapshots verify -Dresources.path=classpath
       
       - name: Upload Reports
         run: |
