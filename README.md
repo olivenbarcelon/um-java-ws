@@ -12,7 +12,7 @@ brew install springboot<br /><br />
 Setup Repository<br />
 git clone https://olivenbarcelon@github.com/olivenbarcelon/um-java-ws.git<br /><br />
 
-Setup Spring Application for Backend<br />
+Setup Spring Application<br />
 spring init --build=maven --java-version=8 --dependencies=webflux --packaging=jar --groupId=io.github.olivenbarcelon --artifactId=um-java-ws --package-name=io.github.olivenbarcelon.umjavaws -n=um-java-ws --description="User Management System" project --force<br /><br />
 
 Run Spring Application<br />
@@ -20,3 +20,10 @@ mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev
 
 Run Maven Test<br />
 mvn --batch-mode --update-snapshots verify -Dspring.profiles.active=dev<br /><br />
+
+Build Java Application Container<br />
+docker build . -t um-java-ws:develop<br /><br />
+
+Run Java Application Container<br />
+Run with Profile<br />
+docker run -itd --name objectstore -v /Users/olie/SemicolonProjects/um-java-ws/project/src/main/resources:/root/resources -e "SPRING_PROFILES_ACTIVE=dev" --restart unless-stopped -p 8080:8080 um-java-ws:develop .<br /><br />
