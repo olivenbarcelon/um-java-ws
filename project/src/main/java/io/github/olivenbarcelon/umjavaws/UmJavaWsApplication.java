@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
 @Log4j2
-@PropertySource("file:${application.property}")
+@PropertySource("${property.source}")
 public class UmJavaWsApplication {
 	
 	public static void main(String[] args) {
