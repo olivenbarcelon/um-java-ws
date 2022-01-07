@@ -3,6 +3,7 @@ package io.github.olivenbarcelon.umjavaws;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.SpringVersion;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
@@ -13,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
 @Log4j2
+@PropertySource("file:${application.property}")
 public class UmJavaWsApplication {
 	
 	public static void main(String[] args) {
