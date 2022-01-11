@@ -18,19 +18,18 @@ public class UserAccountTest {
     @Autowired
     private WebTestClient webTestClient;
     
-    // Test POST request
     @Test
     @Order(1)
     public void post() {
-        /*// Validate user account if null or empty
+        UserAccountEntity entity = new UserAccountEntity();
+        // Validate user account if null or empty
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(new UserAccountEntity()), UserAccountEntity.class)
+            .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        // Store super admin
-        UserAccountEntity entity = new UserAccountEntity();
+        /*// Store super admin
         entity.setUsername("username");
         entity.setPassword("password");
         entity.setRole(Role.SUPER_ADMIN.toString());
