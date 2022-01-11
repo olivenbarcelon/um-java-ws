@@ -29,7 +29,7 @@ public class UserAccountTest {
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        /*// Store super admin
+        // Store super admin
         entity.setUsername("username");
         entity.setPassword("password");
         entity.setRole(Role.SUPER_ADMIN.toString());
@@ -42,7 +42,7 @@ public class UserAccountTest {
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
-        // Validate super admin
+        /*// Validate super admin
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
