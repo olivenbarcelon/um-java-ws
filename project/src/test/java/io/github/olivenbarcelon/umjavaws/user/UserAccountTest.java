@@ -60,6 +60,17 @@ public class UserAccountTest {
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
+        // Add USER role
+        entity.setRole(Role.USER.toString());
+        webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(entity), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.data.uuid").isNotEmpty();
     }
     
     /*@Test
