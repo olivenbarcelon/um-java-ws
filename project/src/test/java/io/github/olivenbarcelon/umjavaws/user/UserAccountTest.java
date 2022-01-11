@@ -22,7 +22,7 @@ public class UserAccountTest {
     @Test
     @Order(1)
     public void post() {
-        // Validate user account if null or empty
+        /*// Validate user account if null or empty
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
@@ -49,10 +49,10 @@ public class UserAccountTest {
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
-            .expectStatus().is4xxClientError();
+            .expectStatus().is4xxClientError();*/
     }
     
-    @Test
+    /*@Test
     @Order(2)
     public void postWithRoleIsNull() {
         UserAccountEntity entity = new UserAccountEntity();
@@ -85,5 +85,5 @@ public class UserAccountTest {
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
-    }
+    }*/
 }
