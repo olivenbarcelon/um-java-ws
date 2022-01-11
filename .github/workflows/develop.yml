@@ -20,11 +20,11 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
+      
       - name: Build image
         if: success()
         run: docker build . -t olivenbarcelon/um-java-ws:develop
-        
+      
       - name: Push to docker registry
         if: success()
         uses: actions-hub/docker@master

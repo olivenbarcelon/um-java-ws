@@ -5,7 +5,7 @@
 # JaCoCo Code Coverage Tutorial with Spring Boot - https://www.youtube.com/watch?v=UZWOb9ce6go
 # Spring 5 Reactive Project - https://github.com/eugenp/tutorials/tree/master/spring-5-reactive-2
 # JaCoCo-Demo - https://github.com/dailycodebuffer/Spring-MVC-Tutorials/tree/master/JaCoCo-Demo
-name: Java CI
+name: Master Build
 
 on:
   push:
@@ -23,13 +23,13 @@ jobs:
       DB_PASSWORD: ${{secrets.DB_PASSWORD}}
     
     steps:
+      - uses: actions/checkout@v2
+      
       - name: Setup MySQL
         run: |
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE `${{env.DB_DATABASE}}`;' -u${{env.DB_USER}} -p${{env.DB_PASSWORD}}
           mysql -e 'SHOW DATABASES;' -u${{env.DB_USER}} -p${{env.DB_PASSWORD}}
-      
-      - uses: actions/checkout@v2
       
       - name: Setup JDK 11
         uses: actions/setup-java@v2
