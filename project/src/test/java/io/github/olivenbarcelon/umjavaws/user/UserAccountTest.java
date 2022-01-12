@@ -29,7 +29,19 @@ public class UserAccountTest {
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        
+        // Add SUPER_ADMIN role
+        UserAccountEntity entity1 = new UserAccountEntity();
+        entity1.setUsername("username");
+        entity1.setPassword("password");
+        webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(entity), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody()
+            .jsonPath("$.data.uuid").isNotEmpty();
         /*// Add SUPER_ADMIN role
         entity.setUsername("username");
         entity.setPassword("password");
