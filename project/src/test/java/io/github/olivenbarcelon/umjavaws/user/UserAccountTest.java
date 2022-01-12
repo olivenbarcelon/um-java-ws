@@ -58,7 +58,9 @@ public class UserAccountTest {
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().is4xxClientError();
-        /*// Add default role
+        // Add default role
+        entity.setUsername("username2");
+        entity.setPassword("password2");
         entity.setRole(null);
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
@@ -70,6 +72,8 @@ public class UserAccountTest {
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
         // Add USER role
+        entity.setUsername("username3");
+        entity.setPassword("password3");
         entity.setRole(Role.USER.toString());
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
@@ -79,6 +83,6 @@ public class UserAccountTest {
             .expectStatus().isCreated()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();*/
+            .jsonPath("$.data.uuid").isNotEmpty();
     }
 }
