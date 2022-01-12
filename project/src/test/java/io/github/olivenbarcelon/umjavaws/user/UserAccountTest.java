@@ -36,7 +36,7 @@ public class UserAccountTest {
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
+            .body(Mono.just(entity1), UserAccountEntity.class)
             .exchange()
             .expectStatus().isCreated()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
