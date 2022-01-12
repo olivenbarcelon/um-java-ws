@@ -30,15 +30,6 @@ public class UserAccountTest {
             .exchange()
             .expectStatus().is4xxClientError();
         
-        entity.setUsername("username");
-        entity.setPassword("password");
-        entity.setRole(Role.SUPER_ADMIN.toString());
-        webTestClient.post().uri("/api/user-account")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
-            .exchange()
-            .expectStatus().is4xxClientError();
         /*// Add SUPER_ADMIN role
         entity.setUsername("username");
         entity.setPassword("password");
