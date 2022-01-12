@@ -42,7 +42,7 @@ public class UserAccountTest {
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.data.uuid").isNotEmpty();
-        // Validate SUPER_ADMIN role
+        /*// Validate SUPER_ADMIN role
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
@@ -70,41 +70,6 @@ public class UserAccountTest {
             .expectStatus().isCreated()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
+            .jsonPath("$.data.uuid").isNotEmpty();*/
     }
-    
-    /*@Test
-    @Order(2)
-    public void postWithRoleIsNull() {
-        UserAccountEntity entity = new UserAccountEntity();
-        entity.setUsername("username");
-        entity.setPassword("password");
-        webTestClient.post().uri("/api/user-account")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
-            .exchange()
-            .expectStatus().isCreated()
-            .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
-    }
-    
-    @Test
-    @Order(3)
-    public void postWithRoleIsUser() {
-        UserAccountEntity entity = new UserAccountEntity();
-        entity.setUsername("username");
-        entity.setPassword("password");
-        entity.setRole(Role.USER.toString());
-        webTestClient.post().uri("/api/user-account")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
-            .exchange()
-            .expectStatus().isCreated()
-            .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
-    }*/
 }
