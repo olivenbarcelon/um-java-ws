@@ -18,21 +18,24 @@ import lombok.Setter;
  *  [TLS version incompatibility when using latest JDKs with MySQL <8 #182] - https://github.com/mirromutth/r2dbc-mysql/issues/182
  */
 @Table("user_account")
-@Getter
 @Setter
 public class UserAccountEntity {
     @Id
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnoreProperties(allowGetters = false)
+    //@JsonIgnoreProperties(allowGetters = false, allowSetters = true)
     private long id;
+    @Getter
     private String uuid;
+    @Getter
     private String username;
+    @Getter
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @Getter
     private String role;
+    @Getter
     private LocalDateTime createdAt;
+    @Getter
     private LocalDateTime updatedAt;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnoreProperties(allowGetters = false)
     private LocalDateTime deletedAt;
 }
