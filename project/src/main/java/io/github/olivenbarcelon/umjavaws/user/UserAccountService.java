@@ -24,9 +24,22 @@ public class UserAccountService {
     
     public Mono<UserAccountEntity> add(UserAccountEntity model) {
         log.info("Create user account - Start");
-        if(!StringUtility.isValid(model.getUsername(), model.getPassword())) throw new NotAcceptableException("Username and Password must not be blank");
+        if(!StringUtility.isValid(model.getUsername(), model.getPassword())) {
+            String message = "Username and Password must not be blank";
+            log.error(message);
+            throw new NotAcceptableException(message);
+        }
         
-        Mono<UserAccountEntity> response = repository.existsByRole(Role.SUPER_ADMIN.toString())
+        Mono<UserAccountEntity> response = repository.existsByUsername(model.getUsername())
+            .map(m -> {
+                if(m) {
+                    String message = "Username has already taken";
+                    log.error(message);
+                    throw new NotAcceptableException(message);
+                }
+                return model;
+            })
+            .then(repository.existsByRole(Role.SUPER_ADMIN.toString()))
             .map(m -> {
                 if(m != true) {
                     log.info("Super Admin doesn't exists");
@@ -35,7 +48,11 @@ public class UserAccountService {
                 else {
                     log.info("Super Admin already exists");
                     model.setRole(model.getRole() != null ? model.getRole() : Role.USER.toString());
-                    if(model.getRole().equalsIgnoreCase(Role.SUPER_ADMIN.toString())) throw new NotAcceptableException("Unable to create account with SUPER_ADMIN role");
+                    if(model.getRole().equalsIgnoreCase(Role.SUPER_ADMIN.toString())) {
+                        String message = "Unable to create account with SUPER_ADMIN role";
+                        log.error(message);
+                        throw new NotAcceptableException(message);
+                    }
                 }
                 return model;
             })
