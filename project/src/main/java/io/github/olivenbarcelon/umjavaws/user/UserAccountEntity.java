@@ -2,6 +2,7 @@ package io.github.olivenbarcelon.umjavaws.user;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,7 +22,8 @@ import lombok.Setter;
 @Setter
 public class UserAccountEntity {
     @Id
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnoreProperties(allowGetters = false)
     private long id;
     private String uuid;
     private String username;
@@ -31,5 +33,6 @@ public class UserAccountEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnoreProperties(allowGetters = false)
     private LocalDateTime deletedAt;
 }
