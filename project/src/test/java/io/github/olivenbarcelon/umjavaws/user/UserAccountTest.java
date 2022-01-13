@@ -10,79 +10,118 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import io.github.olivenbarcelon.umjavaws.commons.enums.Role;
+import io.github.olivenbarcelon.umjavaws.commons.exception.ExceptionDetails;
+import io.github.olivenbarcelon.umjavaws.commons.utils.MapperUtility;
+import io.github.olivenbarcelon.umjavaws.commons.utils.StringUtility;
+import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Log4j2
 public class UserAccountTest {
     @Autowired
     private WebTestClient webTestClient;
     
     @Test
     @Order(1)
-    public void post() {
+    public void createUserAccountWithEmptyData() {
+        log.info("Create user account with empty data");
+        webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(new UserAccountEntity()), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().is4xxClientError().returnResult(ExceptionDetails.class)
+            .getResponseBody().subscribe(s -> log.info("\n" + MapperUtility.toJson(s)));
+    }
+    
+    @Test
+    @Order(2)
+    public void createUserAccountWithSuperAdmin() {
+        log.info("Create user account with super admin");
         UserAccountEntity entity = new UserAccountEntity();
-        // Validate user account if null or empty
+        entity.setUsername("superadmin");
+        entity.setPassword("superadmin");
+        entity.setRole(Role.SUPER_ADMIN.toString());
+        var response = webTestClient.post().uri("/api/user-account")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .body(Mono.just(entity), UserAccountEntity.class)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody().jsonPath("$.data.uuid").isNotEmpty().returnResult();
+        log.info(StringUtility.toString(response.getResponseBody()));
+    }
+    
+    @Test
+    @Order(3)
+    public void createUserAccountWithUsernameExists() {
+        log.info("Create user account with username exists");
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("superadmin");
+        entity.setPassword("superadmin");
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
-            .expectStatus().is4xxClientError();
-        // Add SUPER_ADMIN role
-        entity.setUsername("username");
-        entity.setPassword("password");
+            .expectStatus().is4xxClientError().returnResult(ExceptionDetails.class)
+            .getResponseBody().subscribe(s -> log.info("\n" + MapperUtility.toJson(s)));
+    }
+    
+    @Test
+    @Order(4)
+    public void createUserAccountWithSuperAdminExists() {
+        log.info("Create user account with super admin exists");
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("admin");
+        entity.setPassword("admin");
         entity.setRole(Role.SUPER_ADMIN.toString());
         webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
-            .expectStatus().isCreated()
-            .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
-        // Validate username
-        webTestClient.post().uri("/api/user-account")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
-            .exchange()
-            .expectStatus().is4xxClientError();
-        // Validate SUPER_ADMIN role
-        entity.setUsername("username1");
-        entity.setPassword("password1");
-        webTestClient.post().uri("/api/user-account")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(Mono.just(entity), UserAccountEntity.class)
-            .exchange()
-            .expectStatus().is4xxClientError();
-        // Add default role
-        entity.setUsername("username2");
-        entity.setPassword("password2");
-        entity.setRole(null);
-        webTestClient.post().uri("/api/user-account")
+            .expectStatus().is4xxClientError().returnResult(ExceptionDetails.class)
+            .getResponseBody().subscribe(s -> log.info("\n" + MapperUtility.toJson(s)));
+    }
+    
+    @Test
+    @Order(5)
+    public void createUserAccountWithDefaultRole() {
+        log.info("Create user account with default role");
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("admin");
+        entity.setPassword("admin");
+        var response = webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().isCreated()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
-        // Add USER role
-        entity.setUsername("username3");
-        entity.setPassword("password3");
+            .expectBody().jsonPath("$.data.uuid").isNotEmpty().returnResult();
+        log.info(StringUtility.toString(response.getResponseBody()));
+    }
+    
+    @Test
+    @Order(6)
+    public void createUserAccountWithUserRole() {
+        log.info("Create user account with user role");
+        UserAccountEntity entity = new UserAccountEntity();
+        entity.setUsername("user");
+        entity.setPassword("user");
         entity.setRole(Role.USER.toString());
-        webTestClient.post().uri("/api/user-account")
+        var response = webTestClient.post().uri("/api/user-account")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .body(Mono.just(entity), UserAccountEntity.class)
             .exchange()
             .expectStatus().isCreated()
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody()
-            .jsonPath("$.data.uuid").isNotEmpty();
+            .expectBody().jsonPath("$.data.uuid").isNotEmpty().returnResult();
+        log.info(StringUtility.toString(response.getResponseBody()));
     }
 }

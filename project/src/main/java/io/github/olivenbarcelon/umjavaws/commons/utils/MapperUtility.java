@@ -7,6 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+/**
+ * @since 2021-11-25 [JDK11]
+ * @version 2022-01-13
+ * @author Oliven C. Barcelon
+ */
 public class MapperUtility {
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -20,7 +25,15 @@ public class MapperUtility {
             return false;
         }
     }
-
+    
+    /**
+     * Convert {@link Object} to JSON {@link String}
+     * @param object input that convert into json
+     * @return {@link String}
+     * @since 2021-11-25 [JDK11]
+     * @version 2022-01-13
+     * @author Oliven C. Barcelon
+     */
     public static String toJson(Object object) {
         try {
             mapper.registerModule(new JavaTimeModule());
