@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 /**
  * @since 2021.09.09 [JDK11]
- * @version 2021.11.29
+ * @version 2022.01.13
  * @author Oliven C. Barcelon
  */
 public class StringUtility {
@@ -109,7 +109,23 @@ public class StringUtility {
         String regex = "^[\\w\\sÑñ]+";
         return input.matches(regex);
     }
-
+    
+    private static boolean isLowerCase(char c) {
+        return (c >= 'a' && c <= 'z'); // Check if the character is in lower case.
+    }
+    
+    /**
+     * Check if input is null or empty
+     * @param inputs {@link String}
+     * @return {@link Boolean}
+     * @since 2021.09.09 [JDK11]
+     * @version 2021.11.29
+     * @author Oliven C. Barcelon
+     */
+    private static boolean isNullOrEmpty(String input) {
+        return input == null || input.isEmpty();
+    }
+    
     public static boolean isValid(String input) {
         return !isNullOrEmpty(input);
     }
@@ -128,16 +144,8 @@ public class StringUtility {
         return true;
     }
     
-    /**
-     * Check if input is null or empty
-     * @param inputs {@link String}
-     * @return {@link Boolean}
-     * @since 2021.09.09 [JDK11]
-     * @version 2021.11.29
-     * @author Oliven C. Barcelon
-     */
-    private static boolean isNullOrEmpty(String input) {
-        return input == null || input.isEmpty();
+    private static boolean isWhitespace(char c) {
+        return (c == ' ');
     }
     
     public static boolean isWord(String input) {
@@ -145,7 +153,7 @@ public class StringUtility {
         String regex = "^[a-zA-Z\\sÑñ]+";
         return input.matches(regex);
     }
-
+    
     public static String formatPhoneNumber(String input) {
         if(isNullOrEmpty(input)) return input;
 
@@ -226,14 +234,6 @@ public class StringUtility {
         return new String(c);
     }
 
-    private static boolean isLowerCase(char c) {
-        return (c >= 'a' && c <= 'z'); // Check if the character is in lower case.
-    }
-
-    private static boolean isWhitespace(char c) {
-        return (c == ' ');
-    }
-
     public static String toCamelCase(String str) {
         if(!str.contains("_")) return str;
         return toCamelCase(str.replaceFirst("_[a-z]", String.valueOf(toUpperCase(str.charAt(str.indexOf("_") + 1)))));
@@ -265,7 +265,21 @@ public class StringUtility {
         str = str.replaceAll(regex, replacement).toLowerCase();
         return str;
     }
-
+    
+    /**
+     * Convert {@link Byte} array of input to {@link String}.
+     * @param bytes array of input
+     * @return {@code String}
+     * @since 2022.01.13 [JDK11]
+     * @version 2022.01.13
+     * @author Oliven C. Barcelon
+     * @see
+     * <a href="https://mkyong.com/java/how-do-convert-byte-array-to-string-in-java/">How to convert byte[] array to String in Java</a>
+     */
+    public static String toString(byte[] bytes) {
+        return new String(bytes, Charset.forName("UTF-8"));
+    }
+    
     public static String insertStr(String originalStr, String insertStr, int index) {
         if(isValid(originalStr)) return originalStr.substring(0, index + 1) + insertStr + originalStr.substring(index + 1);
         else return insertStr;

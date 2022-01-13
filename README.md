@@ -16,9 +16,11 @@ Setup Spring Application<br />
 spring init --build=maven --java-version=8 --dependencies=webflux --packaging=jar --groupId=io.github.olivenbarcelon --artifactId=um-java-ws --package-name=io.github.olivenbarcelon.umjavaws -n=um-java-ws --description="User Management System" project --force<br /><br />
 
 Run Spring Application<br />
-mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev -Dresources.path=classpath"<br /><br />
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dresources.path=classpath -Dspring.profiles.active=dev"<br /><br />
 
 Run Maven Test<br />
+mvn test -Dresources.path=classpath -Dspring.profiles.active=dev<br />
+or<br />
 mvn --batch-mode --update-snapshots verify -Dresources.path=classpath -Dspring.profiles.active=dev<br /><br />
 
 Build Java Application Container<br />
