@@ -124,4 +124,17 @@ public class UserAccountTest {
             .expectBody().jsonPath("$.data.uuid").isNotEmpty().returnResult();
         log.info(StringUtility.toString(response.getResponseBody()));
     }
+    
+    @Test
+    @Order(7)
+    public void get() {
+        log.info("Get User Account List");
+        var response = webTestClient.get().uri("/api/user-account")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody().jsonPath("$.data").isNotEmpty().returnResult();
+        log.info(StringUtility.toString(response.getResponseBody()));
+    }
 }
