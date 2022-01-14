@@ -14,7 +14,9 @@ public class UserAccountRouter {
     @Bean
     public RouterFunction<ServerResponse> routeUserAccount(UserAccountHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/api/user-account")
-            .and(RequestPredicates.accept(MediaType.APPLICATION_JSON))
-            .and(RequestPredicates.contentType(MediaType.APPLICATION_JSON)), handler::store);
+                .and(RequestPredicates.accept(MediaType.APPLICATION_JSON))
+                .and(RequestPredicates.contentType(MediaType.APPLICATION_JSON)), handler::store)
+            .andRoute(RequestPredicates.GET("/api/user-account")
+                .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)), handler::index);
     }
 }

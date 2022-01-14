@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
-import lombok.Getter;
 import io.github.olivenbarcelon.umjavaws.commons.utils.StringUtility;
+import lombok.Getter;
 
 /**
  * @since 2021-08-01 [JDK11]

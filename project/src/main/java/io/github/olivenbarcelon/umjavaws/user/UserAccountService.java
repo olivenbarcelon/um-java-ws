@@ -12,6 +12,7 @@ import io.github.olivenbarcelon.umjavaws.commons.exception.NotAcceptableExceptio
 import io.github.olivenbarcelon.umjavaws.commons.utils.StringUtility;
 import io.github.olivenbarcelon.umjavaws.commons.utils.crypto.CryptoUtility;
 import lombok.extern.log4j.Log4j2;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -52,5 +53,9 @@ public class UserAccountService {
             }).flatMap(repository::save);
         log.info("Create user account - Stop");
         return response;
+    }
+    
+    public Flux<UserAccountEntity> get() {
+        return repository.findAll();
     }
 }
