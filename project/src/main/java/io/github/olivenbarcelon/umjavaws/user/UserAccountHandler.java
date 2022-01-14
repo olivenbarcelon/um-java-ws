@@ -25,4 +25,9 @@ public class UserAccountHandler {
                 .body(BodyInserters.fromValue(new Response(fm, "User Account has successfully created"))))
             .onErrorResume(e -> ReactiveExceptionHandler.exception(request, e));
     }
+    
+    public Mono<ServerResponse> index(ServerRequest request) {
+        return service.get().collectList().flatMap(fm -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromValue(new Response(fm))));
+    }
 }
