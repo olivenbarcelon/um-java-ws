@@ -27,6 +27,12 @@ public class UserAccountHandler {
     }
     
     public Mono<ServerResponse> index(ServerRequest request) {
+        int page = request.queryParam("page").map(m -> Integer.parseInt(m)).orElse(0);
+        int size = request.queryParam("size").map(m -> Integer.parseInt(m)).orElse(20);
+        if(page != 0) {
+            return service.get(page, size).flatMap(fm -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(new Response(fm))));
+        }
         return service.get().collectList().flatMap(fm -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(new Response(fm))));
     }
