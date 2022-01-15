@@ -5,6 +5,9 @@ import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import io.github.olivenbarcelon.umjavaws.commons.enums.Role;
@@ -57,5 +60,9 @@ public class UserAccountService {
     
     public Flux<UserAccountEntity> get() {
         return repository.findAll();
+    }
+    
+    public Mono<Page<UserAccountEntity>> get(int page, int size) {
+        return repository.findAll(PageRequest.of(page - 1, size, Sort.by("id").descending()));
     }
 }
