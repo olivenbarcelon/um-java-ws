@@ -127,9 +127,22 @@ public class UserAccountTest {
     
     @Test
     @Order(7)
-    public void get() {
-        log.info("Get User Account List");
+    public void getUserAccountList() {
+        log.info("Get user account list");
         var response = webTestClient.get().uri("/api/user-account")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk()
+            .expectHeader().contentType(MediaType.APPLICATION_JSON)
+            .expectBody().jsonPath("$.data").isNotEmpty().returnResult();
+        log.info(StringUtility.toString(response.getResponseBody()));
+    }
+    
+    @Test
+    @Order(8)
+    public void getUserAccountWithPaginate() {
+        log.info("Get user account list with paginate");
+        var response = webTestClient.get().uri("/api/user-account?page={page}&size={size}", 1, 5)
             .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isOk()
