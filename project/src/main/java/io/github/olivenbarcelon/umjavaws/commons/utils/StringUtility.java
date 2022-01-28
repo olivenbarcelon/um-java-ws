@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 /**
  * @since 2021.09.09 [JDK11]
- * @version 2022.01.13
+ * @version 2022-01-27
  * @author Oliven C. Barcelon
  */
 public class StringUtility {
@@ -103,7 +103,22 @@ public class StringUtility {
         if(isNullOrEmpty(input)) return input;
         return Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
-
+    
+    /**
+     * Remove all special character except white space
+     * @param input {@code String} input
+     * @return {@code String}
+     * @since 2022-01-27 [JDK11]
+     * @version 2022-01-27
+     * @author Oliven C. Barcelon
+     * @see
+     * <a href="https://www.geeksforgeeks.org/how-to-remove-all-non-alphanumeric-characters-from-a-string-in-java/">How to remove all non-alphanumeric characters from a string in Java</a>
+     */
+    public static String removeNonAlphaNumeric(String input) {
+        if(isAlphaNumeric(input)) return input;
+        else return input.replaceAll("[^a-zA-Z0-9\\s]", "");
+    }
+    
     public static boolean isAlphaNumeric(String input) {
         if(isNullOrEmpty(input)) return true;
         String regex = "^[\\w\\sÑñ]+";
@@ -122,7 +137,7 @@ public class StringUtility {
      * @version 2021.11.29
      * @author Oliven C. Barcelon
      */
-    private static boolean isNullOrEmpty(String input) {
+    public static boolean isNullOrEmpty(String input) {
         return input == null || input.isEmpty();
     }
     
