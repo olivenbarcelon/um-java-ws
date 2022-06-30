@@ -5,15 +5,42 @@ import java.security.SecureRandom;
 import java.text.Normalizer;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * @since 2021.09.09 [JDK11]
- * @version 2022-01-27
+ * @version 2022.03.18
  * @author Oliven C. Barcelon
  */
 public class StringUtility {
 
+    /**
+     * Evaluate the input if NULL or not
+     * @param input1 {@code String}
+     * @param input2 {@code String}
+     * @return {@code String} value of the first expression that does not evaluate to NULL
+     * @since 2022.03.18 [JDK11]
+     * @version 2022.03.18
+     * @author Oliven C. Barcelon
+     */
+    public static String coalesce(String input1, String input2) {
+        return isValid(input1) ? input1 : input2;
+    }
+
+    /**
+     * Concat {@code String} input with delimiter
+     * @param delimiter {@code Character}
+     * @param inputs {@code String}
+     * @return {@code String}
+     * @since 2022-02-02 [JDK11]
+     * @version 2022.02.02
+     * @author Oliven C. Barcelon
+     */
+    public static String concat(char delimiter, String... inputs) {
+        return Stream.of(inputs).filter(StringUtility::notNullOrEmptyOrBlank).collect(Collectors.joining(String.valueOf(delimiter)));
+    }
+    
     public static String randomString(int len) {
         byte[] bytes = new byte[256];
         new SecureRandom().nextBytes(bytes);
@@ -130,6 +157,18 @@ public class StringUtility {
     }
     
     /**
+     * Check if input is null
+     * @param inputs {@code String}
+     * @return {@code Boolean}
+     * @since 2022.02.03 [JDK11]
+     * @version 2022.02.03
+     * @author Oliven C. Barcelon
+     */
+    private static boolean isNull(Object input) {
+        return input == null;
+    }
+    
+    /**
      * Check if input is null or empty
      * @param inputs {@link String}
      * @return {@link Boolean}
@@ -138,19 +177,55 @@ public class StringUtility {
      * @author Oliven C. Barcelon
      */
     public static boolean isNullOrEmpty(String input) {
-        return input == null || input.isEmpty();
+        return isNull(input) || input.isEmpty();
     }
     
+    /**
+     * Check data if is {@code Integer}
+     * @param data {@code String}
+     * @return {@code Boolean}
+     * @since 2022.02.11 [JDK11]
+     * @version 2022.02.11
+     * @author Oliven C. Barcelon
+     */
+    public static boolean isInteger(String data) {
+        if(!notNullOrEmptyOrBlank(data)) return false;
+        String regex = "^[\\d]+$";
+        return data.matches(regex);
+    }
+    
+    /**
+     * Validate input
+     * @param input {@code Object}
+     * @return {@code Boolean}
+     * @since 2022.02.03 [JDK11]
+     * @version 2022.02.03
+     * @author Oliven C. Barcelon
+     */
+    public static boolean isValid(Object input) {
+        if(isNull(input)) return false;
+        if(input instanceof String) return notNullOrEmptyOrBlank(input.toString());
+        return true;
+    }
+    
+    /**
+     * Validate input
+     * @param input {@code String}
+     * @return {@code Boolean}
+     * @since 2021.05.19 [JDK11]
+     * @version 2022.02.03
+     * @author Oliven C. Barcelon
+     */
     public static boolean isValid(String input) {
         return !isNullOrEmpty(input);
     }
     
     /**
      * Validate input
-     * @param inputs {@link String}
+     * @param inputs {@link String} array
      * @return {@link Boolean}
      * @since 2021.09.09 [JDK11]
-     * @version 2021.11.29
+     * @version 2022.02.03
      * @author Oliven C. Barcelon
      */
     public static boolean isValid(String... inputs) {
@@ -192,7 +267,19 @@ public class StringUtility {
     public static String leftPad(String text, int length, char c) {
         return String.format("%1$" + length + "s", text).replace(' ', c);
     }
-
+    
+    /**
+     * Check the input if is not null, empty and blank
+     * @param input {@code String}
+     * @return {@code Boolean} true if input is not null, empty and blank
+     * @since 2022.02.02 [JDK11]
+     * @version 2022.02.02
+     * @author Oliven C. Barcelon
+    */
+    private static boolean notNullOrEmptyOrBlank(String input) {
+        return isValid(input) && !input.isBlank();
+    }
+    
     public static String rightPad(String text, int length, char c) {
         return String.format("%1$-" + length + "s", text).replace(' ', c);
     }
